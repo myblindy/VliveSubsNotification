@@ -1,0 +1,77 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:VliveSubsNotification.ViewModels;assembly=VliveSubsNotification"
+        x:Class="VliveSubsNotification.Views.MainWindow"
+        Icon="/Assets/v-live.ico"
+        Title="Vlive Subs Notification">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <DockPanel>
+    <Grid DockPanel.Dock="Top" ColumnDefinitions="auto,auto,auto,*" Margin="0,0,0,5">
+      <ToggleButton Grid.Column="0" IsChecked="{Binding OnlyInteresting}">Only Interesting</ToggleButton>
+      <ToggleButton Grid.Column="1" IsChecked="{Binding OnlyActive}">Only Active</ToggleButton>
+      <Button Grid.Column="2" Margin="5,0,0,0" Command="{Binding RefreshCommand}" IsEnabled="{Binding !Refreshing}">Refresh</Button>
+      <ProgressBar Grid.Column="3" IsIndeterminate="True" IsVisible="{Binding Refreshing}" />
+    </Grid>
+
+    <DataGrid Items="{Binding SelectedEntries}" DoubleTapped="OnEntryDoubleTapped"
+              CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Channel" Binding="{Binding ChannelName}" IsReadOnly="True" />
+        <DataGridTemplateColumn Header="Title" IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Grid ColumnDefinitions="150,auto">
+                <Image Source="{Binding PreviewImage}" MaxHeight="150"/>
+                <ItemsControl Grid.Column="1" Items="{Binding Title, Converter={StaticResource StringToEmojiSubstringConverter}}" VerticalAlignment="Center">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock FontFamily="{Binding FontFamily}" Text="{Binding Text}" />
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </Grid>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Date" IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Date, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Duration" IsReadOnly="True">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Duration, Converter={StaticResource TimespanConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridCheckBoxColumn Header="English Subs" Binding="{Binding HasEnglishSubs}" IsReadOnly="True" />
+        <DataGridTemplateColumn Header="Seen">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding IsWatched}" HorizontalAlignment="Center"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Ignored">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding IsIgnored}" HorizontalAlignment="Center"/>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</Window>

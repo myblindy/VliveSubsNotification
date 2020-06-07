@@ -1,0 +1,21 @@
+﻿<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:VliveSubsNotification.Converters"
+             xmlns:local="clr-namespace:VliveSubsNotification"
+             x:Class="VliveSubsNotification.App">
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
+
+  <Application.Resources>
+    <conv:DateTimeConverter x:Key="DateTimeConverter"/>
+    <conv:TimespanConverter x:Key="TimespanConverter"/>
+    <conv:StringToEmojiSubstringConverter x:Key="StringToEmojiSubstringConverter"/>
+  </Application.Resources>
+
+  <Application.Styles>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+  </Application.Styles>
+</Application>
