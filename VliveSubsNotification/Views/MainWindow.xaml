@@ -21,7 +21,7 @@
               CanUserResizeColumns="True" CanUserReorderColumns="True" CanUserSortColumns="True">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Channel" Binding="{Binding ChannelName}" IsReadOnly="True" />
-        <DataGridTemplateColumn Header="Title" IsReadOnly="True">
+        <DataGridTemplateColumn Header="Title" IsReadOnly="True" SortMemberPath="Title">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <Grid ColumnDefinitions="150,auto">
@@ -42,14 +42,14 @@
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="Date" IsReadOnly="True">
+        <DataGridTemplateColumn Header="Date" IsReadOnly="True" SortMemberPath="Date">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding Date, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Center" />
             </DataTemplate>
           </DataGridTemplateColumn.CellTemplate>
         </DataGridTemplateColumn>
-        <DataGridTemplateColumn Header="Duration" IsReadOnly="True">
+        <DataGridTemplateColumn Header="Duration" IsReadOnly="True" SortMemberPath="Duration">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
               <TextBlock Text="{Binding Duration, Converter={StaticResource TimespanConverter}}" VerticalAlignment="Center" HorizontalAlignment="Right" />
